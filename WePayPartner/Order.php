@@ -1,6 +1,6 @@
 <?php
 
-namespace WePay;
+namespace WePayPartner;
 
 use WePay\Basic\Tools;
 use WePay\Exceptions\InvalidArgumentException;
@@ -12,7 +12,7 @@ use WePay\Basic\DecryptAes;
 /**
  * 订单支付接口
  * Class Order
- * @package WePay
+ * @package WePartnerPay
  */
 class Order extends BasicWePay
 {
@@ -31,10 +31,10 @@ class Order extends BasicWePay
     public function create($type, $data)
     {
         $types = [
-            'h5'     => '/v3/pay/transactions/h5',
-            'app'    => '/v3/pay/transactions/app',
-            'jsapi'  => '/v3/pay/transactions/jsapi',
-            'native' => '/v3/pay/transactions/native',
+            'h5'     => '/v3/pay/partner/transactions/h5',
+            'app'    => '/v3/pay/partner/transactions/app',
+            'jsapi'  => '/v3/pay/partner/transactions/jsapi',
+            'native' => '/v3/pay/partner/transactions/native',
         ];
         if (empty($types[$type])) {
             throw new InvalidArgumentException("Payment {$type} not defined.");
@@ -44,15 +44,16 @@ class Order extends BasicWePay
             if (empty($result['prepay_id'])) return $result;
             // 支付参数签名
             $time = (string)time();
-            $appid = $this->config['appid'];
+            $appid = $this->config['sub_appid'];
             $prepayId = $result['prepay_id'];
             $nonceStr = Tools::createNoncestr();
             if ($type === 'app') {
                 $sign = $this->signBuild(join("\n", [$appid, $time, $nonceStr, $prepayId, '']));
-                return ['partnerId' => $this->config['mch_id'], 'prepayId' => $prepayId, 'package' => 'Sign=WXPay', 'nonceStr' => $nonceStr, 'timeStamp' => $time, 'sign' => $sign];
+                return ['appid' => $appid, 'partnerid' => $this->config['sub_mchid'], 'prepayid' => $prepayId, 'package' => 'Sign=WXPay', 'noncestr' => $nonceStr, 'timestamp' => $time, 'sign' => $sign];
             } elseif ($type === 'jsapi') {
-                $sign = $this->signBuild(join("\n", [$appid, $time, $nonceStr, "prepay_id={$prepayId}", '']));
-                return ['appId' => $appid, 'timestamp' => $time, 'nonceStr' => $nonceStr, 'package' => "prepay_id={$prepayId}", 'signType' => 'RSA', 'paySign' => $sign];
+                $package = sprintf('prepay_id=%s', $prepayId);
+                $sign = $this->signBuild(join("\n", [$appid, $time, $nonceStr, $package, '']));
+                return ['appId' => $appid, 'timestamp' => $time, 'nonceStr' => $nonceStr, 'package' => $package, 'signType' => 'RSA', 'paySign' => $sign];
             } else {
                 return $result;
             }
@@ -67,8 +68,10 @@ class Order extends BasicWePay
      */
     public function query($orderNo)
     {
-        $pathinfo = "/v3/pay/transactions/out-trade-no/{$orderNo}";
-        return $this->doRequest('GET', "{$pathinfo}?mchid={$this->config['mch_id']}", '', true);
+        $pathinfo = "/v3/pay/partner/transactions/id/{$orderNo}";
+        // return $this->doRequest('GET', "{$pathinfo}?mchid={$this->config['mch_id']}", '', true);
+        $url = sprintf('%s?sub_mchid=&sp_mchid=%s', $pathinfo, $this->config['sub_mchid'], $this->config['sp_mchid']);
+        return $this->doRequest('GET', $url, '', true);
     }
 
     /**
@@ -82,11 +85,13 @@ class Order extends BasicWePay
         $data = json_decode($body, true);
         if (isset($data['resource'])) {
             $aes = new DecryptAes($this->config['mch_v3_key']);
-            $data['result'] = $aes->decryptToString(
+            $result = $aes->decryptToString(
                 $data['resource']['associated_data'],
                 $data['resource']['nonce'],
                 $data['resource']['ciphertext']
             );
+            $result = json_decode($result, true);
+            $data['result'] = $result;
         }
         return $data;
     }
