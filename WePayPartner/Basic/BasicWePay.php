@@ -11,7 +11,7 @@ use WePayPartner\Basic\Cert;
 /**
  * 微信支付基础类
  * Class BasicWePay
- * @package WePay
+ * @package WePayPartner
  */
 abstract class BasicWePay
 {

@@ -6,7 +6,7 @@ use WePay\Basic\Tools;
 use WePay\Exceptions\InvalidArgumentException;
 use WePay\Exceptions\InvalidDecryptException;
 use WePay\Exceptions\InvalidResponseException;
-use WePay\Basic\BasicWePay;
+use WePayPartner\Basic\BasicWePay;
 use WePay\Basic\DecryptAes;
 
 /**

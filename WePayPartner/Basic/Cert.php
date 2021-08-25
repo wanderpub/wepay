@@ -9,7 +9,7 @@ use WePay\Basic\DecryptAes;
 /**
  * 平台证书管理
  * Class Cert
- * @package WePay
+ * @package WePayPartner
  */
 class Cert extends BasicWePay
 {
