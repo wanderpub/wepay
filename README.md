@@ -97,6 +97,7 @@ $config = [
     'mch_v3_key'   => 'uioman4b6p5rcw189qfvy7zh3ekx0000',
     'cert_public'  => $certPublic,// 微信商户证书公钥，支持证书内容或文件路径
     'cert_private' => $certPrivate// 微信商户证书私钥，支持证书内容或文件路径
+    'cache_path'   => '',// 缓存目录配置（可选，需拥有读写权限）
 ];
 ```
 
@@ -131,5 +132,5 @@ try {
 ----
 
 * WePay 基于`MIT`协议发布，任何人可以用在任何地方，不受约束
-* WePay 部分代码来自互联网，若有异议，可以联系作者进行删除
+* WePay 部分代码来自互联网，若有异议，可以联系作者(13834563@qq.com)进行删除
 
