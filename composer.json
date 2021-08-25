@@ -2,7 +2,7 @@
     "type": "library",
     "name": "wander/wepay",
     "homepage": "https://github.com/wanderpub/wepay.git",
-    "description": "微信支付V3",
+    "description": "微信支付v3版 for PHP,支持微信支付v3版商户直连模式（WePay）和服务商模式（WePayPartner）",
     "license": "MIT",
     "authors": [
         {
