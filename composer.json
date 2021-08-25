@@ -30,8 +30,7 @@
     },
     "autoload": {
         "psr-4": {
-            "WePayV3\\": "WePayV3",
-            "WePayPartner\\": "WePayPartner"
+            "wander\\wepay\\": "src"
         }
     }
 }
