@@ -12,6 +12,8 @@
     ],
     "keywords": [
         "WePay",
+        "WePayV3",
+        "WePayPartner",
         "WeChatPay",
         "WeXinPay"
     ],
@@ -28,7 +30,8 @@
     },
     "autoload": {
         "psr-4": {
-            "WePay\\": "WePay"
+            "WePayV3\\": "WePayV3",
+            "WePayPartner\\": "WePayPartner"
         }
     }
 }
