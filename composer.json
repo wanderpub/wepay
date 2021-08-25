@@ -1,0 +1,34 @@
+{
+    "type": "library",
+    "name": "wander/wepay",
+    "homepage": "https://github.com/wanderpub/wepay.git",
+    "description": "微信支付V3",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "wander",
+            "email": "13834563@qq.com"
+        }
+    ],
+    "keywords": [
+        "WePay",
+        "WeChatPay",
+        "WeXinPay"
+    ],
+    "require": {
+        "php": ">=5.4",
+        "ext-xml": "*",
+        "ext-json": "*",
+        "ext-curl": "*",
+        "ext-bcmath": "*",
+        "ext-libxml": "*",
+        "ext-openssl": "*",
+        "ext-mbstring": "*",
+        "ext-simplexml": "*"
+    },
+    "autoload": {
+        "psr-4": {
+            "WePay\\": "WePay"
+        }
+    }
+}
