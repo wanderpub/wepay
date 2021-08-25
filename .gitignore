@@ -5,3 +5,5 @@ composer.phar
 /vendor
 /composer.lock
 /_test/cert
+/_test
+/Cache

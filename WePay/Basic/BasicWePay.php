@@ -6,7 +6,7 @@ use WePay\Basic\Tools;
 use WePay\Exceptions\InvalidArgumentException;
 use WePay\Exceptions\InvalidResponseException;
 use WePay\Exceptions\LocalCacheException;
-use WePay\Cert;
+use WePay\Basic\Cert;
 
 /**
  * 微信支付基础类

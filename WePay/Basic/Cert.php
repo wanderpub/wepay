@@ -1,6 +1,6 @@
 <?php
 
-namespace WePay;
+namespace WePay\Basic;
 
 use WePay\Exceptions\InvalidResponseException;
 use WePay\Basic\BasicWePay;
@@ -9,7 +9,7 @@ use WePay\Basic\DecryptAes;
 /**
  * 平台证书管理
  * Class Cert
- * @package WePayV3
+ * @package WePay
  */
 class Cert extends BasicWePay
 {
