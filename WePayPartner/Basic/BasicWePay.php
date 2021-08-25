@@ -229,6 +229,9 @@ abstract class BasicWePay
      */
     protected function tmpFile($name, $content = null)
     {
+        if (!empty($this->config['cache_path'])) {
+            Tools::$cache_path = $this->config['cache_path'];
+        }
         if (is_null($content)) {
             return base64_decode(Tools::getCache($name) ?: '');
         } else {
