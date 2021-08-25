@@ -10,7 +10,7 @@ use WePay\Basic\BasicWePay;
 use WePay\Basic\DecryptAes;
 
 /**
- * 订单支付接口
+ * 直连商户 订单支付接口
  * Class Order
  * @package WePay
  */

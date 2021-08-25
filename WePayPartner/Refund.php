@@ -15,7 +15,7 @@ use WePay\Basic\BasicWePay;
 class Refund extends BasicWePay
 {
     /**
-     * 创建退款订单
+     * 服务商模式创建退款订单
      * @param array $data 退款参数
      * @return array
      * @throws InvalidResponseException

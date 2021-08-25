@@ -8,7 +8,7 @@ use WePay\Exceptions\InvalidResponseException;
 use WePay\Basic\BasicWePay;
 
 /**
- * 订单退款接口
+ * 直连商户 订单退款接口
  * Class Refund
  * @package WePay
  */
