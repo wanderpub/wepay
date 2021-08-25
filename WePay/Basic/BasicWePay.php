@@ -38,6 +38,7 @@ abstract class BasicWePay
         'cert_serial'  => '', // 商户证书序号，无需配置
         'cert_public'  => '', // 商户公钥内容，需要配置
         'cert_private' => '', // 商户密钥内容，需要配置
+        'cache_path'   => ''  // 临时公钥文件存放目录
     ];
 
     /**
@@ -85,6 +86,7 @@ abstract class BasicWePay
         if (empty($this->config['cert_serial'])) {
             throw new InvalidArgumentException("Failed to parse certificate public key");
         }
+        $this->config['cache_path'] = $options['cache_path'] ?? '';
     }
 
     /**

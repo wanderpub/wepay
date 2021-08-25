@@ -39,7 +39,8 @@ abstract class BasicWePay
         'mch_v3_key'   => '', // 微信服务商密钥，需要配置
         'cert_serial'  => '', // 服务商证书序号，无需配置
         'cert_public'  => '', // 服务商公钥内容，需要配置
-        'cert_private' => ''  // 服务商密钥内容，需要配置
+        'cert_private' => '', // 服务商密钥内容，需要配置
+        'cache_path'   => ''  // 临时文件存放目录
     ];
 
     /**
@@ -98,6 +99,7 @@ abstract class BasicWePay
         if (empty($this->config['cert_serial'])) {
             throw new InvalidArgumentException("Failed to parse certificate public key");
         }
+        $this->config['cache_path'] = $options['cache_path'] ?? '';
     }
 
     /**
