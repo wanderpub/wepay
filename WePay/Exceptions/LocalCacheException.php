@@ -9,7 +9,6 @@ namespace WePay\Exceptions;
  */
 class LocalCacheException extends \Exception
 {
-
     /**
      * @var array
      */
@@ -26,5 +25,4 @@ class LocalCacheException extends \Exception
         parent::__construct($message, intval($code));
         $this->raw = $raw;
     }
-
 }

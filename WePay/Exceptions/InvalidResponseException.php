@@ -25,5 +25,4 @@ class InvalidResponseException extends \Exception
         parent::__construct($message, intval($code));
         $this->raw = $raw;
     }
-
 }
