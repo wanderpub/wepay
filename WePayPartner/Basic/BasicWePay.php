@@ -49,25 +49,25 @@ abstract class BasicWePay
      */
     public function __construct(array $options = [])
     {
-        if (empty($options['sp_appid'])) {
+        if (!isset($options['sp_appid'])) {
             throw new InvalidArgumentException("Missing Config -- [sp_appid]");
         }
-        if (empty($options['sp_mchid'])) {
+        if (!isset($options['sp_mchid'])) {
             throw new InvalidArgumentException("Missing Config -- [sp_mchid]");
         }
-        if (empty($options['sub_appid'])) {
+        if (!isset($options['sub_appid'])) {
             throw new InvalidArgumentException("Missing Config -- [sub_appid]");
         }
-        if (empty($options['sub_mchid'])) {
+        if (!isset($options['sub_mchid'])) {
             throw new InvalidArgumentException("Missing Config -- [sub_mchid]");
         }
-        if (empty($options['mch_v3_key'])) {
+        if (!isset($options['mch_v3_key'])) {
             throw new InvalidArgumentException("Missing Config -- [mch_v3_key]");
         }
-        if (empty($options['cert_private'])) {
+        if (!isset($options['cert_private'])) {
             throw new InvalidArgumentException("Missing Config -- [cert_private]");
         }
-        if (empty($options['cert_public'])) {
+        if (!isset($options['cert_public'])) {
             throw new InvalidArgumentException("Missing Config -- [cert_public]");
         }
 

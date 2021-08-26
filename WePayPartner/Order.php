@@ -23,10 +23,11 @@ class Order extends BasicWePay
 
     /**
      * 创建支付订单
-     * @param string $type 支付类型
+     * @param string $type 支付类型 jsapi,h5,app,native
      * @param array $data 支付参数
      * @return array
      * @throws InvalidResponseException
+     * @link https://pay.weixin.qq.com/wiki/doc/apiv3_partner/apis/chapter4_1_1.shtml
      */
     public function create($type, $data)
     {
@@ -36,27 +37,26 @@ class Order extends BasicWePay
             'jsapi'  => '/v3/pay/partner/transactions/jsapi',
             'native' => '/v3/pay/partner/transactions/native',
         ];
-        if (empty($types[$type])) {
+        if (!isset($types[$type])) {
             throw new InvalidArgumentException("Payment {$type} not defined.");
+        }
+        // 创建预支付码
+        $result = $this->doRequest('POST', $types[$type], json_encode($data, JSON_UNESCAPED_UNICODE), true);
+        if (empty($result['prepay_id'])) return $result;
+        // 支付参数签名
+        $time = (string)time();
+        $appid = $this->config['sub_appid'];
+        $prepayId = $result['prepay_id'];
+        $nonceStr = Tools::createNoncestr();
+        if ($type === 'app') {
+            $sign = $this->signBuild(join("\n", [$appid, $time, $nonceStr, $prepayId, '']));
+            return ['appId' => $appid, 'partnerId' => $this->config['sub_mchid'], 'prepayId' => $prepayId, 'packageValue' => 'Sign=WXPay', 'nonceStr' => $nonceStr, 'timeStamp' => $time, 'sign' => $sign];
+        } elseif ($type === 'jsapi') {
+            $package = sprintf('prepay_id=%s', $prepayId);
+            $sign = $this->signBuild(join("\n", [$appid, $time, $nonceStr, $package, '']));
+            return ['appId' => $appid, 'timestamp' => $time, 'nonceStr' => $nonceStr, 'package' => $package, 'signType' => 'RSA', 'paySign' => $sign];
         } else {
-            // 创建预支付码
-            $result = $this->doRequest('POST', $types[$type], json_encode($data, JSON_UNESCAPED_UNICODE), true);
-            if (empty($result['prepay_id'])) return $result;
-            // 支付参数签名
-            $time = (string)time();
-            $appid = $this->config['sub_appid'];
-            $prepayId = $result['prepay_id'];
-            $nonceStr = Tools::createNoncestr();
-            if ($type === 'app') {
-                $sign = $this->signBuild(join("\n", [$appid, $time, $nonceStr, $prepayId, '']));
-                return ['appid' => $appid, 'partnerid' => $this->config['sub_mchid'], 'prepayid' => $prepayId, 'package' => 'Sign=WXPay', 'noncestr' => $nonceStr, 'timestamp' => $time, 'sign' => $sign];
-            } elseif ($type === 'jsapi') {
-                $package = sprintf('prepay_id=%s', $prepayId);
-                $sign = $this->signBuild(join("\n", [$appid, $time, $nonceStr, $package, '']));
-                return ['appId' => $appid, 'timestamp' => $time, 'nonceStr' => $nonceStr, 'package' => $package, 'signType' => 'RSA', 'paySign' => $sign];
-            } else {
-                return $result;
-            }
+            return $result;
         }
     }
 

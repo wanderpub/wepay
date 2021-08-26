@@ -47,19 +47,18 @@ abstract class BasicWePay
      */
     public function __construct(array $options = [])
     {
-        if (empty($options['mch_id'])) {
+        if (!isset($options['mch_id'])) {
             throw new InvalidArgumentException("Missing Config -- [mch_id]");
         }
-        if (empty($options['mch_v3_key'])) {
+        if (!isset($options['mch_v3_key'])) {
             throw new InvalidArgumentException("Missing Config -- [mch_v3_key]");
         }
-        if (empty($options['cert_private'])) {
+        if (!isset($options['cert_private'])) {
             throw new InvalidArgumentException("Missing Config -- [cert_private]");
         }
-        if (empty($options['cert_public'])) {
+        if (!isset($options['cert_public'])) {
             throw new InvalidArgumentException("Missing Config -- [cert_public]");
         }
-
         if (stripos($options['cert_public'], '-----BEGIN CERTIFICATE-----') === false) {
             if (file_exists($options['cert_public'])) {
                 $options['cert_public'] = file_get_contents($options['cert_public']);
@@ -67,7 +66,6 @@ abstract class BasicWePay
                 throw new InvalidArgumentException("File Non-Existent -- [cert_public]");
             }
         }
-
         if (stripos($options['cert_private'], '-----BEGIN PRIVATE KEY-----') === false) {
             if (file_exists($options['cert_private'])) {
                 $options['cert_private'] = file_get_contents($options['cert_private']);
@@ -75,7 +73,6 @@ abstract class BasicWePay
                 throw new InvalidArgumentException("File Non-Existent -- [cert_private]");
             }
         }
-
         $this->config['appid'] = isset($options['appid']) ? $options['appid'] : '';
         $this->config['mch_id'] = $options['mch_id'];
         $this->config['mch_v3_key'] = $options['mch_v3_key'];

@@ -19,6 +19,7 @@ class Refund extends BasicWePay
      * @param array $data 退款参数
      * @return array
      * @throws InvalidResponseException
+     * @link https://pay.weixin.qq.com/wiki/doc/apiv3/apis/chapter3_1_9.shtml
      */
     public function create($data)
     {
