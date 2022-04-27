@@ -8,7 +8,7 @@ WePay APIv3 SDK for PHP
 功能描述
 ----
 
-* 微信支付v3版--商户直连模式 WePay
+* 微信支付v3版--商户直连模式 WePay 
 * 微信支付v3版--服务商模式 WePayPartner
 * 实现功能一、Order 下单、发起支付、查询订单、回调通知
 * 实现功能二、Refund 创建退款订单、退款订单查询、获取退款通知
